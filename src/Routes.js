@@ -22,7 +22,7 @@ const Routes = () => {
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
             }}>
                 <Stack.Screen name="AllSpots" component={TabNavigator} options={{
-                    header: ({scene}) => {
+                    header: ({scene,navigation: {navigate}}) => {
                         return(
                             <View style={{...scene.descriptor.options.headerStyle,paddingTop: Constants.statusBarHeight,}}>
                                 <View style={{flex:1,flexDirection: "row", alignItems: "center",justifyContent: "space-between"}}>
@@ -31,7 +31,7 @@ const Routes = () => {
                                         <Text style={{fontSize: 9,color: "#AEB6BB"}}>Detected Location</Text>
                                         <Text>Nothern Islands</Text>
                                     </View>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={() => navigate("Filter")}>
                                         <FontAwesome name="gear" style={[styles.icons, {marginRight: 20}]} />
                                     </TouchableOpacity>
                                 </View>
