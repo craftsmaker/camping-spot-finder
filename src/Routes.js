@@ -5,7 +5,7 @@ import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs
 import {Text,View,TouchableOpacity,StyleSheet} from "react-native"
 import Constants from "expo-constants";
 import {Feather,FontAwesome} from "@expo/vector-icons";
-import AllSpots from "./screens/AllSpots";
+import Home from "./screens/Home";
 import Filter from "./screens/Filter";
 
 const Stack = createStackNavigator();
@@ -19,9 +19,10 @@ const Routes = () => {
                     elevation: 0,
                     height: Constants.statusBarHeight + 60,
                 },
-                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
+                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                
             }}>
-                <Stack.Screen name="AllSpots" component={TabNavigator} options={{
+                <Stack.Screen name="Home" component={TabNavigator} options={{
                     header: ({scene,navigation: {navigate}}) => {
                         return(
                             <View style={{...scene.descriptor.options.headerStyle,paddingTop: Constants.statusBarHeight,}}>
@@ -78,10 +79,10 @@ const Tab = createMaterialTopTabNavigator();
 
 function TabNavigator(){
     return(
-        <Tab.Navigator tabBarOptions={{activeTintColor: "#FF7657", inactiveTintColor: "black",labelStyle: {textTransform: "capitalize"},indicatorStyle:{backgroundColor: "#FF7657"}}}>
-            <Tab.Screen name="AllSpots" component={AllSpots} options={{tabBarLabel: "All Spots"}}/>
-            <Tab.Screen name="Tenting" children={() => (<View></View>)} options={{tabBarLabel: "Tenting"}}/>
-            <Tab.Screen name="Camping" children={() => (<View></View>)} options={{tabBarLabel: "RV Camping"}}/>
+        <Tab.Navigator swipeEnabled={false} tabBarOptions={{activeTintColor: "#FF7657", inactiveTintColor: "black",labelStyle: {textTransform: "capitalize"},indicatorStyle:{backgroundColor: "#FF7657"}}}>
+            <Tab.Screen name="Home" component={Home} options={{tabBarLabel: "All Spots"}} initialParams={{filter: "All Spots"}}/>
+            <Tab.Screen name="Tenting" component={Home} options={{tabBarLabel: "Tenting"}} initialParams={{filter: "Camp"}}/>
+            <Tab.Screen name="Camping" children={Home} options={{tabBarLabel: "RV Camping"}} initialParams={{filter: "Tent"}}/>
         </Tab.Navigator>
     )
 }

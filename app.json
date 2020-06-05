@@ -23,6 +23,10 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.nothing.campingspotsfinder",
+      "versionCode": 1
     }
   }
 }

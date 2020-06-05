@@ -57,7 +57,7 @@ const Type = () => {
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles.middleButton,{backgroundColor: activesButtonsFromType[2]? activeColor : "white"}]} 
+                    style={[styles.rightButton,{backgroundColor: activesButtonsFromType[2]? activeColor : "white"}]} 
                     onPress={() => setActivesButtonsFromType([false,false,true])}
                 >
                     <Text style={[styles.buttonText,{color: activesButtonsFromType[2]? "white" : "black"}]}>
