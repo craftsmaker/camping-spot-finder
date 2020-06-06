@@ -1,12 +1,24 @@
 import React,{useState} from "react";
 import {View,Text,Switch,TouchableOpacity,StyleSheet} from "react-native";
+import {useSelector} from "react-redux";
 
 let activeColor = "#FF7657";
 let dividerColor = "#F1F2F5";
 
 
 const SortBy = () => {
-    const [activesButtonsFromSortBy,setActivesButtonsFromSortBy] = useState([true,false,false])
+    const stored = useSelector(state => state);
+    
+    const index = ["Distance","Ratings","Reviews"].findIndex(text => text === stored.SortBy)
+
+    let initialState = [false,false,false];
+
+    if (index !== -1)
+        initialState[index] = true;
+    else
+        initialState[1] = true;
+
+    const [activesButtonsFromSortBy,setActivesButtonsFromSortBy] = useState(initialState)
 
     return(
         <View style={{flex:1,borderBottomWidth: 1,borderColor: dividerColor,paddingBottom: 25}}>
@@ -32,8 +44,18 @@ const SortBy = () => {
 }
 
 const Type = () => {
-    const [activesButtonsFromType,setActivesButtonsFromType] = useState([false,true,false]);
+    const stored = useSelector(state => state);
 
+    const index = ["All","Tenting","RV Camping"].findIndex(text => text === stored.Type)
+
+    let initialState = [false,false,false];
+    if (index !== -1)
+        initialState[index] = true;
+    else
+        initialState[0] = true;
+
+    const [activesButtonsFromType,setActivesButtonsFromType] = useState(initialState);
+    
     return(
         <View style={{flex:1,borderBottomWidth: 1,borderColor: dividerColor,paddingBottom: 25,paddingTop: 10}}>
             <View style={{flex:1,paddingBottom: 10}}>
@@ -70,7 +92,16 @@ const Type = () => {
 }
 
 const Price = () => {
-    const [activesButtonsFromPrice,setActivesButtonsFromPrice] = useState([false,true,false,false]);
+    const stored = useSelector(state => state);
+    const index = ["Free","$","$$","$$$","$$$$"].findIndex(text => text === stored.Price);
+
+    let initialState = [false,false,false,false];
+    if (index !== -1)
+        initialState[index] = true;
+    else
+        initialState[1] = true;
+    
+    const [activesButtonsFromPrice,setActivesButtonsFromPrice] = useState(initialState);
     return(
         <View style={{flex:1,borderBottomWidth: 1,borderColor: dividerColor,paddingBottom: 10}}>
             <View style={{flex:1,paddingBottom: 10}}>
