@@ -10,8 +10,8 @@ const width = Dimensions.get("window").width;
 
 export default function Map(){
     const INITIAL_REGION = {
-      latitude: -10.8533401,
-      longitude: -30.057203,
+      latitude: 10.8533401,
+      longitude: 10.057203,
       latitudeDelta: 1.5,
       longitudeDelta: 1.5,
     };

@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import {View,Text,Switch,TouchableOpacity,StyleSheet} from "react-native";
-import {useSelector} from "react-redux";
+import {useSelector,useDispatch} from "react-redux";
 
 let activeColor = "#FF7657";
 let dividerColor = "#F1F2F5";
@@ -8,17 +8,7 @@ let dividerColor = "#F1F2F5";
 
 const SortBy = () => {
     const stored = useSelector(state => state);
-    
-    const index = ["Distance","Ratings","Reviews"].findIndex(text => text === stored.SortBy)
-
-    let initialState = [false,false,false];
-
-    if (index !== -1)
-        initialState[index] = true;
-    else
-        initialState[1] = true;
-
-    const [activesButtonsFromSortBy,setActivesButtonsFromSortBy] = useState(initialState)
+    const dispatch = useDispatch();
 
     return(
         <View style={{flex:1,borderBottomWidth: 1,borderColor: dividerColor,paddingBottom: 25}}>
@@ -27,16 +17,18 @@ const SortBy = () => {
             </View>
             <View style={{flex:1,flexDirection: "row"}}>
                 <TouchableOpacity 
-                    style={[styles.letftButton,{backgroundColor: activesButtonsFromSortBy[0]? activeColor : "white"}]} 
-                    onPress={() => setActivesButtonsFromSortBy([true,false,false])}
+                    style={[styles.letftButton,{backgroundColor: stored.SortBy.buttonStates[0]? activeColor : "white"}]} 
+                    onPress={() => dispatch({type: "CHANGE_SORT_BY", value:"Distance", buttonStates: [true,false,false]})}
                 >
-                    <Text style={[styles.buttonText,{color: activesButtonsFromSortBy[0]? "white" : "black"}]}>Distance</Text>
+                    <Text style={[styles.buttonText,{color: stored.SortBy.buttonStates[0]? "white" : "black"}]}>Distance</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.middleButton,{backgroundColor: activesButtonsFromSortBy[1]? activeColor : "white"}]} onPress={() => setActivesButtonsFromSortBy([false,true,false])}>
-                    <Text style={[styles.buttonText,,{color: activesButtonsFromSortBy[1]? "white" : "black"}]}>Ratings</Text>
+                <TouchableOpacity style={[styles.middleButton,{backgroundColor: stored.SortBy.buttonStates[1]? activeColor : "white"}]}
+                    onPress={() =>  dispatch({type: "CHANGE_SORT_BY", value:"Ratings", buttonStates: [false,true,false]})}>
+                    <Text style={[styles.buttonText,,{color: stored.SortBy.buttonStates[1]? "white" : "black"}]}>Ratings</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.rightButton,{backgroundColor: activesButtonsFromSortBy[2]? activeColor : "white"}]} onPress={() => setActivesButtonsFromSortBy([false,false,true])}>
-                    <Text style={[styles.buttonText,,{color: activesButtonsFromSortBy[2]? "white" : "black"}]}>Reviews</Text>
+                <TouchableOpacity style={[styles.rightButton,{backgroundColor: stored.SortBy.buttonStates[2]? activeColor : "white"}]} 
+                    onPress={() =>  dispatch({type: "CHANGE_SORT_BY", value:"Reviews", buttonStates: [false,false,true]})}>
+                    <Text style={[styles.buttonText,,{color: stored.SortBy.buttonStates[2]? "white" : "black"}]}>Reviews</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -45,16 +37,7 @@ const SortBy = () => {
 
 const Type = () => {
     const stored = useSelector(state => state);
-
-    const index = ["All","Tenting","RV Camping"].findIndex(text => text === stored.Type)
-
-    let initialState = [false,false,false];
-    if (index !== -1)
-        initialState[index] = true;
-    else
-        initialState[0] = true;
-
-    const [activesButtonsFromType,setActivesButtonsFromType] = useState(initialState);
+    const dispatch = useDispatch();
     
     return(
         <View style={{flex:1,borderBottomWidth: 1,borderColor: dividerColor,paddingBottom: 25,paddingTop: 10}}>
@@ -63,26 +46,26 @@ const Type = () => {
             </View>
             <View style={{flex:3,flexDirection: "row"}}>
                 <TouchableOpacity
-                    style={[styles.letftButton,{backgroundColor: activesButtonsFromType[0]? activeColor : "white"}]} 
-                    onPress={() => setActivesButtonsFromType([true,false,false])}
+                    style={[styles.letftButton,{backgroundColor: stored.Type.buttonStates[0]? activeColor : "white"}]} 
+                    onPress={() => dispatch({type: "CHANGE_TYPE", value:"All", buttonStates: [true,false,false]})}
                 >
-                    <Text style={[styles.buttonText,{color: activesButtonsFromType[0]? "white" : "black"}]}>
+                    <Text style={[styles.buttonText,{color: stored.Type.buttonStates[0]? "white" : "black"}]}>
                         All
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles.middleButton,{backgroundColor: activesButtonsFromType[1]? activeColor : "white"}]} 
-                    onPress={() => setActivesButtonsFromType([false,true,false])}
+                    style={[styles.middleButton,{backgroundColor: stored.Type.buttonStates[1]? activeColor : "white"}]} 
+                    onPress={() => dispatch({type: "CHANGE_TYPE", value:"Tenting", buttonStates: [false,true,false]})}
                 >
-                    <Text style={[styles.buttonText,{color: activesButtonsFromType[1]? "white" : "black"}]}>
+                    <Text style={[styles.buttonText,{color: stored.Type.buttonStates[1]? "white" : "black"}]}>
                         Tenting
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles.rightButton,{backgroundColor: activesButtonsFromType[2]? activeColor : "white"}]} 
-                    onPress={() => setActivesButtonsFromType([false,false,true])}
+                    style={[styles.rightButton,{backgroundColor: stored.Type.buttonStates[2]? activeColor : "white"}]} 
+                    onPress={() => dispatch({type: "CHANGE_TYPE", value:"RV Camping", buttonStates: [false,false,true]})}
                 >
-                    <Text style={[styles.buttonText,{color: activesButtonsFromType[2]? "white" : "black"}]}>
+                    <Text style={[styles.buttonText,{color: stored.Type.buttonStates[2]? "white" : "black"}]}>
                         RV Camping
                     </Text>
                 </TouchableOpacity>
@@ -93,15 +76,8 @@ const Type = () => {
 
 const Price = () => {
     const stored = useSelector(state => state);
-    const index = ["Free","$","$$","$$$","$$$$"].findIndex(text => text === stored.Price);
-
-    let initialState = [false,false,false,false];
-    if (index !== -1)
-        initialState[index] = true;
-    else
-        initialState[1] = true;
+    const dispatch = useDispatch();
     
-    const [activesButtonsFromPrice,setActivesButtonsFromPrice] = useState(initialState);
     return(
         <View style={{flex:1,borderBottomWidth: 1,borderColor: dividerColor,paddingBottom: 10}}>
             <View style={{flex:1,paddingBottom: 10}}>
@@ -109,34 +85,34 @@ const Price = () => {
             </View>
             <View style={{flex:3,flexDirection: "row"}}>
                 <TouchableOpacity
-                    style={[styles.letftButton,{backgroundColor: activesButtonsFromPrice[0]? activeColor : "white"}]} 
-                    onPress={() => setActivesButtonsFromPrice([true,false,false,false])}
+                    style={[styles.letftButton,{backgroundColor:  stored.Price.buttonStates[0]? activeColor : "white"}]} 
+                    onPress={() => dispatch({type: "CHANGE_PRICE", value:"Free", buttonStates: [true,false,false,false]})}
                 >
-                    <Text style={[styles.buttonText,{color: activesButtonsFromPrice[0]? "white" : "black"}]}>
+                    <Text style={[styles.buttonText,{color: stored.Price.buttonStates[0]? "white" : "black"}]}>
                         Free
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles.middleButton,{backgroundColor: activesButtonsFromPrice[1]? activeColor : "white"}]} 
-                    onPress={() => setActivesButtonsFromPrice([false,true,false,false])}
+                    style={[styles.middleButton,{backgroundColor: stored.Price.buttonStates[1]? activeColor : "white"}]} 
+                    onPress={() => dispatch({type: "CHANGE_PRICE", value:"$$", buttonStates: [false,true,false,false]})}
                 >
-                    <Text style={[styles.buttonText,{color: activesButtonsFromPrice[1]? "white" : "black"}]}>
+                    <Text style={[styles.buttonText,{color: stored.Price.buttonStates[1]? "white" : "black"}]}>
                         $$
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    style={[styles.middleButton,{backgroundColor: activesButtonsFromPrice[2]? activeColor : "white"}]} 
-                    onPress={() => setActivesButtonsFromPrice([false,false,true,false])}
+                    style={[styles.middleButton,{backgroundColor: stored.Price.buttonStates[2]? activeColor : "white"}]} 
+                    onPress={() => dispatch({type: "CHANGE_PRICE", value:"$$$", buttonStates: [false,false,true]})}
                 >
-                    <Text style={[styles.buttonText,{color: activesButtonsFromPrice[2]? "white" : "black"}]}>
+                    <Text style={[styles.buttonText,{color: stored.Price.buttonStates[2]? "white" : "black"}]}>
                         $$$
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles.rightButton,{backgroundColor: activesButtonsFromPrice[3]? activeColor : "white"}]} 
-                    onPress={() => setActivesButtonsFromPrice([false,false,false,true])}
+                    style={[styles.rightButton,{backgroundColor: stored.Price.buttonStates[3]? activeColor : "white"}]} 
+                    onPress={() => dispatch({type: "CHANGE_PRICE", value:"$$$$", buttonStates: [false,false,false,true]})}
                 >
-                    <Text style={[styles.buttonText,{color: activesButtonsFromPrice[3]? "white" : "black"}]}>
+                    <Text style={[styles.buttonText,{color: stored.Price.buttonStates[3]? "white" : "black"}]}>
                         $$$$
                     </Text>
                 </TouchableOpacity>
@@ -146,9 +122,8 @@ const Price = () => {
 }
 
 const Options = () => {
-    const [showSpotsFull,setShowSpotsFull] = useState(false);
-    const [showHighlyRatedSpots,setShowHighlyRatedSpots] = useState(false);
-    const [showOnlyFreeSpots,setShowOnlyFreeSpots] = useState(false);
+    const dispatch = useDispatch();
+    const {Options: {showSpotsFull,showHighlyRatedSpots,showOnlyFreeSpots}} = useSelector(state => state);
 
     return(
         <View style={{flex:2}}>
@@ -164,7 +139,7 @@ const Options = () => {
                     </Text>
                 </View>
                 <View style={{flex:2,justifyContent: "center"}}>
-                    <Switch value={showSpotsFull} onTouchStart={() => setShowSpotsFull(prev => !prev)}/>
+                    <Switch value={showSpotsFull} onTouchStart={() => dispatch({type:"TOGGLE_SPOTS_FULL"})}/>
                 </View>
             </View>
             <View style={{flex:1,flexDirection: "row"}}>
@@ -174,7 +149,7 @@ const Options = () => {
                     </Text>
                 </View>
                 <View style={{flex:1, justifyContent: "center"}}>
-                    <Switch value={showHighlyRatedSpots} onTouchStart={() => setShowHighlyRatedSpots(prev => !prev)}/>
+                    <Switch value={showHighlyRatedSpots} onTouchStart={() => dispatch({type: "TOGGLE_HIGHLY_RATED_SPOTS"})}/>
                 </View>
             </View>
             <View style={{flex:1,flexDirection: "row"}}>
@@ -184,7 +159,7 @@ const Options = () => {
                     </Text>
                 </View>
                 <View style={{flex:2,justifyContent: "center"}}>
-                    <Switch value={showOnlyFreeSpots} onTouchStart={() => setShowOnlyFreeSpots(prev => !prev)}/>
+                    <Switch value={showOnlyFreeSpots} onTouchStart={() => dispatch({type: "TOGGLE_ONLY_FREE_SPOTS"})}/>
                 </View>
             </View>
         </View>
