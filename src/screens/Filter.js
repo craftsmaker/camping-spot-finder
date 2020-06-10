@@ -1,6 +1,7 @@
-import React,{useState} from "react";
+import React from "react";
 import {View,Text,Switch,TouchableOpacity,StyleSheet} from "react-native";
 import {useSelector,useDispatch} from "react-redux";
+import {useRoute} from "@react-navigation/native";
 
 let activeColor = "#FF7657";
 let dividerColor = "#F1F2F5";
@@ -38,7 +39,25 @@ const SortBy = () => {
 const Type = () => {
     const stored = useSelector(state => state);
     const dispatch = useDispatch();
-    
+    const {params: {fromScreen}} = useRoute();
+
+    function changeType(screenName){
+        let buttonStates = [true,false,false]
+        if (screenName === "Tenting")
+            buttonStates = [false,true,false]
+        else if(screenName === "RV Camping")
+            buttonStates = [false,false,true]
+        
+        dispatch({type: "CHANGE_TYPE", value:screenName, buttonStates})
+    }
+ 
+    React.useLayoutEffect( () => {
+        console.log("SUPOSE")
+        if (stored.Type.type !== fromScreen)
+            changeType(fromScreen)
+
+    },[fromScreen])
+
     return(
         <View style={{flex:1,borderBottomWidth: 1,borderColor: dividerColor,paddingBottom: 25,paddingTop: 10}}>
             <View style={{flex:1,paddingBottom: 10}}>
@@ -47,7 +66,7 @@ const Type = () => {
             <View style={{flex:3,flexDirection: "row"}}>
                 <TouchableOpacity
                     style={[styles.letftButton,{backgroundColor: stored.Type.buttonStates[0]? activeColor : "white"}]} 
-                    onPress={() => dispatch({type: "CHANGE_TYPE", value:"All", buttonStates: [true,false,false]})}
+                    onPress={() => changeType("All")}
                 >
                     <Text style={[styles.buttonText,{color: stored.Type.buttonStates[0]? "white" : "black"}]}>
                         All
@@ -55,7 +74,7 @@ const Type = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.middleButton,{backgroundColor: stored.Type.buttonStates[1]? activeColor : "white"}]} 
-                    onPress={() => dispatch({type: "CHANGE_TYPE", value:"Tenting", buttonStates: [false,true,false]})}
+                    onPress={() => changeType("Tenting")}
                 >
                     <Text style={[styles.buttonText,{color: stored.Type.buttonStates[1]? "white" : "black"}]}>
                         Tenting
@@ -63,7 +82,7 @@ const Type = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.rightButton,{backgroundColor: stored.Type.buttonStates[2]? activeColor : "white"}]} 
-                    onPress={() => dispatch({type: "CHANGE_TYPE", value:"RV Camping", buttonStates: [false,false,true]})}
+                    onPress={() => changeType("RV Camping")}
                 >
                     <Text style={[styles.buttonText,{color: stored.Type.buttonStates[2]? "white" : "black"}]}>
                         RV Camping

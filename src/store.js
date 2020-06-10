@@ -7,7 +7,7 @@ const INITIAL_STATE = {
     },
     Type: {
         type: "All",
-        buttonStates: [false,true,false],
+        buttonStates: [true,false,false],
     },
     Price: {
         type: "Free",
@@ -34,6 +34,8 @@ function reducer(state = INITIAL_STATE,action){
             return {...state, Type: {...state.SortBy, type: action.value,buttonStates: action.buttonStates}};
         case "CHANGE_SORT_BY":
             return {...state, SortBy: {...state.SortBy, type: action.value,buttonStates: action.buttonStates}};
+        case "CHANGE_ONLY_TYPE":
+            return {...state, Type: {...state.SortBy, type: action.value}};
         default:
             return state;
     }

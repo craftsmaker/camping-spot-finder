@@ -8,17 +8,15 @@ import * as Location from "expo-location";
 
 const width = Dimensions.get("window").width;
 
-export default function Map(){
+export default function Map({type =  "All Spots"}){
     const INITIAL_REGION = {
       latitude: 10.8533401,
       longitude: 10.057203,
       latitudeDelta: 1.5,
       longitudeDelta: 1.5,
     };
-  
-    const {params} = useRoute();
     const reference = React.useRef(null);
-
+    
     useEffect(() => {
       (async () => {
         await Location.requestPermissionsAsync()
@@ -34,7 +32,7 @@ export default function Map(){
             showsUserLocation={true}
         >
           {MARKERS.map((marker,index) => {
-            if (params?.filter === "All Spots"){
+            if (type === "All Spots"){
               return (
                 <Marker key={index} coordinate={marker.coordinates}>
                   {
@@ -45,14 +43,14 @@ export default function Map(){
                 </Marker>
               )
             }
-            else if(params?.filter === "Camp" && marker.type === "camp"){
+            else if(type === "RV Camping" && marker.type === "camp"){
               return(
                 <Marker key={index} coordinate={marker.coordinates}>
                   <FontAwesome5 name="truck"/>
                 </Marker>
               )
-            }
-            else if(params?.filter === "Tent" && marker.type === "tent"){
+            } 
+            else if(type === "Tenting" && marker.type === "tent"){
               return(
                 <Marker key={index} coordinate={marker.coordinates}>
                   <Fontisto name="tent"/>
