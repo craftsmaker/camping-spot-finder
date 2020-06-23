@@ -2,6 +2,7 @@ import React from "react";
 import {View,Text,Switch,TouchableOpacity,StyleSheet} from "react-native";
 import {useSelector,useDispatch} from "react-redux";
 import {useRoute} from "@react-navigation/native";
+import {Fontisto,FontAwesome5} from "@expo/vector-icons";
 
 let activeColor = "#FF7657";
 let dividerColor = "#F1F2F5";
@@ -37,10 +38,10 @@ const SortBy = () => {
 }
 
 const Type = () => {
-    const stored = useSelector(state => state);
+    const {Type} = useSelector(state => state);
     const dispatch = useDispatch();
     const {params: {fromScreen}} = useRoute();
-
+    console.log(Type);
     function changeType(screenName){
         let buttonStates = [true,false,false]
         if (screenName === "Tenting")
@@ -50,13 +51,6 @@ const Type = () => {
         
         dispatch({type: "CHANGE_TYPE", value:screenName, buttonStates})
     }
- 
-    React.useLayoutEffect( () => {
-        console.log("SUPOSE")
-        if (stored.Type.type !== fromScreen)
-            changeType(fromScreen)
-
-    },[fromScreen])
 
     return(
         <View style={{flex:1,borderBottomWidth: 1,borderColor: dividerColor,paddingBottom: 25,paddingTop: 10}}>
@@ -65,26 +59,36 @@ const Type = () => {
             </View>
             <View style={{flex:3,flexDirection: "row"}}>
                 <TouchableOpacity
-                    style={[styles.letftButton,{backgroundColor: stored.Type.buttonStates[0]? activeColor : "white"}]} 
+                    style={[styles.letftButton,{backgroundColor: Type[0]? activeColor : "white"}]} 
                     onPress={() => changeType("All")}
                 >
-                    <Text style={[styles.buttonText,{color: stored.Type.buttonStates[0]? "white" : "black"}]}>
+                    <View style={{flex:1,alignItems: "center",justifyContent: "center",position:"relative"}}>
+                        <Fontisto name="tent" size={18} style={{position:"absolute", left: "30%",color: Type[0]? "white" : activeColor}}/>
+                        <FontAwesome5 name="truck" size={18} style={{position:"absolute", right: "35%",color: Type[0]? "white" : "#FFBA5A"}}/>
+                    </View>
+                    <Text style={[styles.buttonText,{color: Type[0]? "white" : "black"}]}>
                         All
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles.middleButton,{backgroundColor: stored.Type.buttonStates[1]? activeColor : "white"}]} 
+                    style={[styles.middleButton,{backgroundColor: Type[1]? activeColor : "white"}]} 
                     onPress={() => changeType("Tenting")}
                 >
-                    <Text style={[styles.buttonText,{color: stored.Type.buttonStates[1]? "white" : "black"}]}>
+                    <View style={{flex:1,alignItems: "center",justifyContent: "center"}}>
+                        <Fontisto name="tent" size={18} style={{color: Type[1]? "white" : activeColor}}/>
+                    </View>
+                    <Text style={[styles.buttonText,{color: Type[1]? "white" : "black"}]}>
                         Tenting
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles.rightButton,{backgroundColor: stored.Type.buttonStates[2]? activeColor : "white"}]} 
+                    style={[styles.rightButton,{backgroundColor: Type[2]? activeColor : "white"}]} 
                     onPress={() => changeType("RV Camping")}
                 >
-                    <Text style={[styles.buttonText,{color: stored.Type.buttonStates[2]? "white" : "black"}]}>
+                    <View style={{flex:1,alignItems: "center",justifyContent: "center"}}>
+                        <FontAwesome5 name="truck" size={18}  style={{color: Type[2]? "white" : "#FFBA5A"}}/>
+                    </View>
+                    <Text style={[styles.buttonText,{color: Type[2]? "white" : "black"}]}>
                         RV Camping
                     </Text>
                 </TouchableOpacity>
@@ -97,6 +101,27 @@ const Price = () => {
     const stored = useSelector(state => state);
     const dispatch = useDispatch();
     
+    const {params: {price}} = useRoute();
+
+    function changePrice(screenName){
+        let buttonStates = [true,false,false,false]
+        if (screenName === "$$")
+            buttonStates = [false,true,false,false]
+        else if(screenName === "$$$")
+            buttonStates = [false,false,true,false]
+        else if(screenName === "$$$$")
+            buttonStates = [false,false,false,true]
+        
+        dispatch({type: "CHANGE_PRICE", value:screenName, buttonStates})
+    }
+ 
+    // React.useLayoutEffect( () => {
+    //     console.log("SUPOSE")
+    //     if (stored.Type.type !== fromScreen)
+    //         changeType(price)
+
+    // },[price])
+
     return(
         <View style={{flex:1,borderBottomWidth: 1,borderColor: dividerColor,paddingBottom: 10}}>
             <View style={{flex:1,paddingBottom: 10}}>
@@ -105,7 +130,7 @@ const Price = () => {
             <View style={{flex:3,flexDirection: "row"}}>
                 <TouchableOpacity
                     style={[styles.letftButton,{backgroundColor:  stored.Price.buttonStates[0]? activeColor : "white"}]} 
-                    onPress={() => dispatch({type: "CHANGE_PRICE", value:"Free", buttonStates: [true,false,false,false]})}
+                    onPress={() => changePrice("Free")}
                 >
                     <Text style={[styles.buttonText,{color: stored.Price.buttonStates[0]? "white" : "black"}]}>
                         Free
@@ -113,7 +138,7 @@ const Price = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.middleButton,{backgroundColor: stored.Price.buttonStates[1]? activeColor : "white"}]} 
-                    onPress={() => dispatch({type: "CHANGE_PRICE", value:"$$", buttonStates: [false,true,false,false]})}
+                    onPress={() => changePrice("$$")}
                 >
                     <Text style={[styles.buttonText,{color: stored.Price.buttonStates[1]? "white" : "black"}]}>
                         $$
@@ -121,7 +146,7 @@ const Price = () => {
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={[styles.middleButton,{backgroundColor: stored.Price.buttonStates[2]? activeColor : "white"}]} 
-                    onPress={() => dispatch({type: "CHANGE_PRICE", value:"$$$", buttonStates: [false,false,true]})}
+                    onPress={() => changePrice("$$$")}
                 >
                     <Text style={[styles.buttonText,{color: stored.Price.buttonStates[2]? "white" : "black"}]}>
                         $$$
@@ -129,7 +154,7 @@ const Price = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.rightButton,{backgroundColor: stored.Price.buttonStates[3]? activeColor : "white"}]} 
-                    onPress={() => dispatch({type: "CHANGE_PRICE", value:"$$$$", buttonStates: [false,false,false,true]})}
+                    onPress={() => changePrice("$$$$")}
                 >
                     <Text style={[styles.buttonText,{color: stored.Price.buttonStates[3]? "white" : "black"}]}>
                         $$$$
@@ -240,7 +265,9 @@ const styles = StyleSheet.create({
         color: "white"
     },
     buttonText:{
-        textAlign: "center"
+        flex:1,
+        textAlign: "center",
+        textAlignVertical: "center",
     },
 })
 

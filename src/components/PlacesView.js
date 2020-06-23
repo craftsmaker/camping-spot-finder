@@ -1,26 +1,32 @@
 import React from "react";
 import {View,Text,Image,Dimensions,FlatList,TouchableOpacity} from "react-native"
-import {useSelector} from "react-redux";
-import {useRoute,useNavigationState} from "@react-navigation/native";
+import {useRoute} from "@react-navigation/native";
 import {PLACES} from "../Mocks";
 import {Entypo} from "@expo/vector-icons";
+import {useSelector} from "react-redux";
 
 const width = Dimensions.get("window").width;
 
-export default function({type = "All"}){
+export default function(){
+  const {SortBy:{type: sortBy},Price:{type: priceType}} = useSelector(state => state)
   
+  const {params} = useRoute();
+  const type = params?.type;
+
   return(
     <View style={{width,height: "80%"}}>
       <FlatList
         data={PLACES}
         keyExtractor={item => item.id}
         renderItem={({ item: place }) => {
-          if (type === "All")
-            return <ListItem place={place}/>
-          else if (type === "Tenting" && place.type === "Tenting")
-            return <ListItem place={place}/>
-          else if(type === "RV Camping" && place.type === "RV Camping")
-            return <ListItem place={place}/>
+          if (type === place.type || type === "All"){
+            if (place.tag === priceType)
+              return <ListItem place={place}/>
+            else if(priceType === "All"){
+              return <ListItem place={place}/>
+            }else
+              return null;
+          }
         }}
       />
     </View>

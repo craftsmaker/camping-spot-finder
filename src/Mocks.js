@@ -14,6 +14,22 @@ const MARKERS = [
         longitude: 101.655449
       },
       type:"tent"
+    },
+    {
+      title: 'hello2',
+      coordinates: {
+        latitude: 6.8533401,
+        longitude: 101.655449
+      },
+      type:"tent"
+    },
+    {
+      title: 'hello2',
+      coordinates: {
+        latitude: 7.8733401,
+        longitude: 101.655449
+      },
+      type:"camp"
     }
 ]
 

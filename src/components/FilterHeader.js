@@ -3,9 +3,9 @@ import {View,TouchableOpacity,StyleSheet,Text} from "react-native";
 import {Feather} from "@expo/vector-icons";
 import Constants from "expo-constants";
 import {useSelector} from "react-redux";
+import {CommonActions} from "@react-navigation/native";
 
 export default ({scene,previous,navigation}) => {
-    const {Type: {type}} = useSelector(state => state);
     const {options} = scene.descriptor;
     const title = 
         options.headerTitle !== undefined
@@ -16,7 +16,7 @@ export default ({scene,previous,navigation}) => {
     return(
         <View style={{...options.headerStyle,paddingTop: Constants.statusBarHeight,}}>
             <View style={{flex:1,flexDirection: "row", alignItems: "center",justifyContent: "space-between"}}>
-                <TouchableOpacity style={{marginLeft: 20}} onPress={() => navigation.navigate(type)}>
+                <TouchableOpacity style={{marginLeft: 20}} onPress={() => navigation.goBack()}>
                     <Feather name="arrow-left" style={styles.icons}/>
                 </TouchableOpacity>
                 <Text style={{fontSize: 20}}>{title}</Text>

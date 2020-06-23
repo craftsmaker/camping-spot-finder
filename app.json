@@ -22,11 +22,18 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.nothing.campingspotsfinder",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
       "package": "com.nothing.campingspotsfinder",
-      "versionCode": 1
+      "versionCode": 1,
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCpx9eX-c8t7ZKXnjjoFIgu79DK1GYqAWU"
+        }
+      }
     }
   }
 }

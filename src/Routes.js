@@ -2,17 +2,17 @@ import React from "react";
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator,CardStyleInterpolators} from "@react-navigation/stack";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
-import {Text,View,TouchableOpacity,StyleSheet} from "react-native"
 import Constants from "expo-constants";
-import {Feather,FontAwesome} from "@expo/vector-icons";
 import Filter from "./screens/Filter";
 import store from "./store";''
 import {Provider} from "react-redux";
 import FilterHeader from "./components/FilterHeader"
 import HomeHeader from "./components/HomeHeader";
-import AllSpots from "./screens/AllSpots";
-import Tenting from "./screens/Tenting";
-import RVCamping from "./screens/RVCamping";
+// import AllSpots from "./screens/AllSpots";
+// import Tenting from "./screens/Tenting";
+// import RVCamping from "./screens/RVCamping";
+
+import {RVCamping,Tenting,AllSpots} from "./screens/Home"
 
 const Stack = createStackNavigator();
 
@@ -45,7 +45,7 @@ function TabNavigator(){
             swipeEnabled={false} 
             tabBarOptions={{activeTintColor: "#FF7657", inactiveTintColor: "black",labelStyle: {textTransform: "capitalize"},indicatorStyle:{backgroundColor: "#FF7657"}}}
         >
-            <Tab.Screen name="All" component={AllSpots} options={{tabBarLabel: "All Spots"}}/>
+            <Tab.Screen name="All" component={AllSpots} options={{tabBarLabel: "All Spots"}} initialParams={{type: "All"}}/>
             <Tab.Screen name="Tenting" component={Tenting} options={{tabBarLabel: "Tenting"}} initialParams={{type: "Tenting"}}/>
             <Tab.Screen name="RV Camping" component={RVCamping} options={{tabBarLabel: "RV Camping"}} initialParams={{type: "RV Camping"}}/>
         </Tab.Navigator>

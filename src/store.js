@@ -5,10 +5,7 @@ const INITIAL_STATE = {
         type: "Ratings",
         buttonStates: [false,true,false],
     },
-    Type: {
-        type: "All",
-        buttonStates: [true,false,false],
-    },
+    Type: [true,false,false],
     Price: {
         type: "Free",
         buttonStates: [true,false,false],
