@@ -3,8 +3,7 @@ import {View} from "react-native"
 import MapView from '../components/MapView';
 import PlacesView from '../components/PlacesView';
 
-function Foundation({type = "All"}){
-    console.log("Main Entrance")
+function Foundation(){
     return(
         <View style={{height: "66.7%",position: "relative"}}>
             <MapView/>

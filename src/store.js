@@ -28,7 +28,7 @@ function reducer(state = INITIAL_STATE,action){
         case "CHANGE_PRICE":
             return {...state, Price: {...state.SortBy, type: action.value,buttonStates: action.buttonStates}};
         case "CHANGE_TYPE":
-            return {...state, Type: {...state.SortBy, type: action.value,buttonStates: action.buttonStates}};
+            return {...state, Type: action.status};
         case "CHANGE_SORT_BY":
             return {...state, SortBy: {...state.SortBy, type: action.value,buttonStates: action.buttonStates}};
         case "CHANGE_ONLY_TYPE":

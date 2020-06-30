@@ -29,7 +29,7 @@ const CustomTent = () => {
 export default function Map(){
   const reference = React.useRef(null);
   const {SortBy:{type: sortBy},Price:{type: priceType}} = useSelector(state => state)
-  console.log("Map:",priceType);
+
   useEffect(() => {
     (async () => {
       await Location.requestPermissionsAsync()

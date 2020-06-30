@@ -37,20 +37,29 @@ const SortBy = () => {
     )
 }
 
+let screens = ["All","Tenting","RV Camping"]
+
 const Type = () => {
     const {Type} = useSelector(state => state);
     const dispatch = useDispatch();
     const {params: {fromScreen}} = useRoute();
     console.log(Type);
-    function changeType(screenName){
+    function changeType(screenIndex = 0){
         let buttonStates = [true,false,false]
-        if (screenName === "Tenting")
+        if (screenIndex === 1)
             buttonStates = [false,true,false]
-        else if(screenName === "RV Camping")
+        else if(screenIndex === 2)
             buttonStates = [false,false,true]
         
-        dispatch({type: "CHANGE_TYPE", value:screenName, buttonStates})
+        dispatch({type: "CHANGE_TYPE", status: buttonStates})
     }
+
+    let index = Type.indexOf(true);
+    React.useEffect(() => {
+        if (fromScreen !== screens[index])
+            changeType(index)
+    },[fromScreen])
+
 
     return(
         <View style={{flex:1,borderBottomWidth: 1,borderColor: dividerColor,paddingBottom: 25,paddingTop: 10}}>
@@ -60,7 +69,7 @@ const Type = () => {
             <View style={{flex:3,flexDirection: "row"}}>
                 <TouchableOpacity
                     style={[styles.letftButton,{backgroundColor: Type[0]? activeColor : "white"}]} 
-                    onPress={() => changeType("All")}
+                    onPress={() => changeType()}
                 >
                     <View style={{flex:1,alignItems: "center",justifyContent: "center",position:"relative"}}>
                         <Fontisto name="tent" size={18} style={{position:"absolute", left: "30%",color: Type[0]? "white" : activeColor}}/>
@@ -72,7 +81,7 @@ const Type = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.middleButton,{backgroundColor: Type[1]? activeColor : "white"}]} 
-                    onPress={() => changeType("Tenting")}
+                    onPress={() => changeType(1)}
                 >
                     <View style={{flex:1,alignItems: "center",justifyContent: "center"}}>
                         <Fontisto name="tent" size={18} style={{color: Type[1]? "white" : activeColor}}/>
@@ -83,7 +92,7 @@ const Type = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.rightButton,{backgroundColor: Type[2]? activeColor : "white"}]} 
-                    onPress={() => changeType("RV Camping")}
+                    onPress={() => changeType(2)}
                 >
                     <View style={{flex:1,alignItems: "center",justifyContent: "center"}}>
                         <FontAwesome5 name="truck" size={18}  style={{color: Type[2]? "white" : "#FFBA5A"}}/>
