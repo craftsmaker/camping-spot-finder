@@ -3,7 +3,7 @@
 </h4>
 
 <p align="center">
-  <img src=".github/example.jpg" width="100%"/>
+  <img src=".github/example.jpg" width="25%"/>
 </p>
 
 <p align="center">
