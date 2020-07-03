@@ -9,14 +9,21 @@ const width = Dimensions.get("window").width;
 
 export default function(){
   const {SortBy:{type: sortBy},Price:{type: priceType}} = useSelector(state => state)
-  
+  let places = PLACES.slice();
+
+  if (sortBy === "Ratings")
+    places.sort((a,b) => parseFloat(b.stars) - parseFloat(a.stars) );
+
+  if (sortBy === "Distance")
+    places.sort((a,b) => parseFloat(b.distance.substring(0,3)) - parseFloat(a.stars.substring(0,3)) );
+
   const {params} = useRoute();
   const type = params?.type;
 
   return(
     <View style={{width,height: "80%"}}>
       <FlatList
-        data={PLACES}
+        data={places}
         keyExtractor={item => item.id}
         renderItem={({ item: place }) => {
           if (type === place.type || type === "All"){

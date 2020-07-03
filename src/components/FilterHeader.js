@@ -6,11 +6,11 @@ import {useSelector} from "react-redux";
 
 const types = ["All","Tenting","RV Camping"]
 
-export default ({scene,previous,navigation}) => {
+export default ({scene,navigation}) => {
     const {Type} = useSelector(state => state);
 
     let screen = types[Type.indexOf(true)];
-    console.log("FH:",screen)
+
     const {options} = scene.descriptor;
     const title = 
         options.headerTitle !== undefined

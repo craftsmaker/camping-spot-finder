@@ -43,7 +43,6 @@ const Type = () => {
     const {Type} = useSelector(state => state);
     const dispatch = useDispatch();
     const {params: {fromScreen}} = useRoute();
-    console.log(Type);
     function changeType(screenIndex = 0){
         let buttonStates = [true,false,false]
         if (screenIndex === 1)
@@ -110,7 +109,6 @@ const Price = () => {
     const stored = useSelector(state => state);
     const dispatch = useDispatch();
     
-    const {params: {price}} = useRoute();
 
     function changePrice(screenName){
         let buttonStates = [true,false,false,false]
@@ -125,11 +123,11 @@ const Price = () => {
     }
  
     // React.useLayoutEffect( () => {
-    //     console.log("SUPOSE")
+        
     //     if (stored.Type.type !== fromScreen)
-    //         changeType(price)
+    //         changeType(stored)
 
-    // },[price])
+    // },[fromScreen])
 
     return(
         <View style={{flex:1,borderBottomWidth: 1,borderColor: dividerColor,paddingBottom: 10}}>

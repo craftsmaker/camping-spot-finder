@@ -18,9 +18,9 @@ const INITIAL_REGION = {
   longitudeDelta: 1.5,
 };
 
-const CustomTruck = () => {
+const CustomTruck = React.memo(() => {
   return <FontAwesome5 name="truck" style={{backgroundColor: yellowColor,borderRadius: 30,padding: 10,color: "white"}}/>
-}
+})
 
 const CustomTent = () => {
   return <Fontisto name="tent" style={{backgroundColor: orangeColor,borderRadius: 30,padding: 10,color: "white"}}/>
@@ -28,7 +28,7 @@ const CustomTent = () => {
 
 export default function Map(){
   const reference = React.useRef(null);
-  const {SortBy:{type: sortBy},Price:{type: priceType}} = useSelector(state => state)
+  const selector = useSelector(state => state)
 
   useEffect(() => {
     (async () => {
